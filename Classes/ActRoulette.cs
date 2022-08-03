@@ -33,7 +33,7 @@ namespace Activity_Roulette.Classes
             else
             {
                 FileStream fileCreator = File.Create(filePath);
-                // fileCreator.Close();
+                fileCreator.Close();
             }
         }
         public static void AddNewActivity()
@@ -53,6 +53,10 @@ namespace Activity_Roulette.Classes
                     break;
                 }
             }
+        }
+        public static bool ValidateNewActivity(string userInput)
+        {
+            
         }
     }
 }
