@@ -12,7 +12,9 @@ namespace Activity_Roulette.Classes
         // Папка приложения
         private static string AppFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Activity Roulette";
         // Файл активностей
-        private static string filePath = AppFolder + @"\activitylist.txt";
+        public static readonly string activityListPath = AppFolder + @"\activitylist.txt";
+        // Файл истории логов
+        private static string historyLogPath = AppFolder + @"\historylog.txt";
         public static void CreateAppFolder()
         {
             if (Directory.Exists(AppFolder))
@@ -26,13 +28,25 @@ namespace Activity_Roulette.Classes
         }
         public static void CreateActivityList()
         {
-            if (File.Exists(filePath))
+            if (File.Exists(activityListPath))
             {
                 return;
             }
             else
             {
-                FileStream fileCreator = File.Create(filePath);
+                FileStream fileCreator = File.Create(activityListPath);
+                fileCreator.Close();
+            }
+        }
+        public static void CreateHistoryLog()
+        {
+            if (File.Exists(historyLogPath))
+            {
+                return;
+            }
+            else
+            {
+                FileStream fileCreator = File.Create(historyLogPath);
                 fileCreator.Close();
             }
         }
@@ -42,7 +56,7 @@ namespace Activity_Roulette.Classes
             while (true)
             {
                 string userInput = Console.ReadLine();
-                using (StreamWriter activityWriter = File.AppendText(filePath))
+                using (StreamWriter activityWriter = File.AppendText(activityListPath))
                 {
                     if (userInput.ToLower() != "exit")
                     {
@@ -81,7 +95,7 @@ namespace Activity_Roulette.Classes
             int startIndex = userInput.IndexOf(symbol) + 1;
             string number = userInput.Substring(startIndex).Trim();
             bool isConveratble = Int32.TryParse(number, out int result);
-            if (isConveratble == true && number.Length <= 2)
+            if (isConveratble == true && result <= 100)
             {
                 return true;
             }
@@ -91,7 +105,8 @@ namespace Activity_Roulette.Classes
             }
         }
 
-        /* Метод для определения повторов
+        /* Что-то на будущее :D
+         * Метод для определения повторов
          * public static bool ValidateNewActivityItemNumber(string userInput)
         { 
         
