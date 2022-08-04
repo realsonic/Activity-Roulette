@@ -21,8 +21,11 @@ namespace Activity_Roulette
             string userAnswer = Console.ReadLine();
             if (userAnswer.ToLower() == "yes")
             {
-                Console.WriteLine("Please use following structure: Activity Name, Number (1 - 99 which will represent Your desire to perform the input activity).");
-                Roulette.AddNewActivity();
+                Console.WriteLine("Please use following structure: Activity Name, Number" + "\n" +
+                    "Where: Activity Name should not include a \",\" as is used to divide the activity name from a number" + "\n" +
+                    "       Number is from 1 to 99 which will represent Your desire to do a particular task" + "\n" +
+                    "For Example: Play Might and Magic 10, 65");
+                Roulette.AddNewActivityItem();
             }
             else
             {

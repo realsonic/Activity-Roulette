@@ -36,27 +36,76 @@ namespace Activity_Roulette.Classes
                 fileCreator.Close();
             }
         }
-        public static void AddNewActivity()
+        public static void AddNewActivityItem()
         {
+            Console.WriteLine("Type \"exit\" to go back.");
             while (true)
             {
                 string userInput = Console.ReadLine();
-                if (userInput.ToLower() != "exit")
+                using (StreamWriter activityWriter = File.AppendText(filePath))
                 {
-                    using (StreamWriter activityWriter = File.AppendText(filePath))
+                    if (userInput.ToLower() != "exit")
                     {
-                        activityWriter.WriteLine(userInput);
+                        if (ValidateNewActivityItemString(userInput) == true && ValidateNewActivityItemNumber(userInput) == true)
+                        {
+                            activityWriter.WriteLine(userInput);
+                            continue;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please follow the template: \"Activity Name, Number\"");
+                            continue;
+                        }
                     }
-                }
-                else
-                {
-                    break;
+                    else
+                    {
+                        break;
+                    }
                 }
             }
         }
-        public static bool ValidateNewActivity(string userInput)
+        public static bool ValidateNewActivityItemString(string userInput)
         {
-            
+            if (userInput.Count(c => c == ',') == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
+        public static bool ValidateNewActivityItemNumber(string userInput)
+        {
+            char symbol = ',';
+            int startIndex = userInput.IndexOf(symbol) + 1;
+            string number = userInput.Substring(startIndex).Trim();
+            bool isConveratble = Int32.TryParse(number, out int result);
+            if (isConveratble == true && number.Length <= 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /* Метод для определения повторов
+         * public static bool ValidateNewActivityItemNumber(string userInput)
+        { 
+        
+        }
+           Метод для изменения активности
+         * public static string ChangeActivityItem()
+        {
+
+        }*/
+
+        /* Метод для удаления активности
+         * public static string DeleteActivityItem()
+        {
+
+        }*/
     }
 }
