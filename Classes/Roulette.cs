@@ -15,10 +15,12 @@ namespace Activity_Roulette.Classes
         public static readonly string activityListPath = AppFolder + @"\activitylist.txt";
         // Файл истории
         private static readonly string historyLogPath = AppFolder + @"\historylog.txt";
+        // Контейнер текущих активностей
+        private static Dictionary<string, ActivityItem> activityItemsContainer;
         // Общий вес файла активностей
-        private int activityListWeight;
+        private static int overallActivityListWeight;
         // Общий размер файла истории
-        private int historyLogSize;
+        private static int historyLogSize;
 
         public static void CreateAppFolder()
         {
@@ -107,17 +109,46 @@ namespace Activity_Roulette.Classes
                 return false;
             }
         }
-        public static Dictionary<string, ActivityItem> CreateContainer()
+        public static void SetActivityItemsContainer()
         {
-            Dictionary<string, ActivityItem> activityItemsContainer = new Dictionary<string, ActivityItem>();
+            Dictionary<string, ActivityItem> Container = new Dictionary<string, ActivityItem>();
             foreach (string line in File.ReadLines(activityListPath))
             {
                 ActivityItem activity = new ActivityItem(line);
-                activityItemsContainer.Add(activity.name, activity);
+                Container.Add(activity.name, activity);
             }
+            activityItemsContainer = Container;
+        }
+        public static Dictionary<string, ActivityItem> GetActivityItemsContainer()
+        {
+
             return activityItemsContainer;
         }
+        public static void WriteHistoryLogLine()
+        {
 
+        }
+        public static void SetHistoryLogSize()
+        {
+            historyLogSize = File.ReadLines(historyLogPath).Count();
+        }
+        public static int GetHistoryLogSize()
+        {
+            return historyLogSize;
+        } 
+        public static void SetOverallActivityListWeight(Dictionary<string, ActivityItem> Container)
+        {
+            int sum = 0;
+            foreach (KeyValuePair<string, ActivityItem> activity in Container)
+            {
+                sum += activity.Value.activityListItemWeight;
+            }
+            overallActivityListWeight = sum;
+        }
+        public static int GetOverallActivityListWeight()
+        {
+            return overallActivityListWeight;
+        }
         /* Что-то на будущее :D
            Метод для определения повторов
          public static bool ValidateNewActivityItemNumber(string userInput)
@@ -130,7 +161,7 @@ namespace Activity_Roulette.Classes
         {
 
         }
-
+        
            Метод для удаления активности
          public static string DeleteActivityItem()
         {

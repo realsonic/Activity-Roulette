@@ -15,6 +15,9 @@ namespace Activity_Roulette
             Console.WriteLine("User, Hi!");
             Roulette.CreateAppFolder();
             Roulette.CreateActivityList();
+            Roulette.CreateHistoryLog();
+            Roulette.SetOverallActivityListWeight();
+            Roulette.SetHistoryLogSize();
             // switch как меню для реализации разных действий?
             // Запрос на добавление новых активностей
             Console.WriteLine("Do You want to add new activities in the File? Yes/No");
