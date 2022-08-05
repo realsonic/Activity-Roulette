@@ -34,9 +34,6 @@ namespace Activity_Roulette
                     break;
                 }
             }
-            var numberOfLines = File.ReadLines(Roulette.activityListPath).Count();
-            Console.WriteLine(numberOfLines);
-            ActivityItem[] activities = new ActivityItem[numberOfLines];
             Console.ReadLine();
         }
     }

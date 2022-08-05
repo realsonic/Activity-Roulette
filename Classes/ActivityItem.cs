@@ -8,13 +8,10 @@ namespace Activity_Roulette.Classes
 {
     class ActivityItem
     {
-        //контейнер для всех объектов из списка. А нужен ли он?
-        public ActivityItem[] activityItems;
-
-        // поле имени класса
+        // название активности
         public string name;
 
-        // вес активности из списка (дергать из файла). А int ли это тогда это вообще, потому что остальные что-то блин???
+        // вес активности из списка. А int ли это тогда это вообще, потому что остальные что-то блин???
         public int activityListItemWeight;
 
         // вес активности относительно файла активностей определяется путём деления activityListItemWeight на сумму activityListItemWeight всех активностей в файле. А int ли это вообще???
@@ -26,10 +23,12 @@ namespace Activity_Roulette.Classes
         // относительный невыбранный вес активности определяется путём вычитания relativeLogFileItemWeight из relativeActivtyListItemWeight. А int ли это вообще???
         public int nonSelectionRelativeItemWeight;
 
-        // Допилить конструктор
-        public ActivityItem()
+        // Допилить конструктор???
+        public ActivityItem(string fileLine)
         {
-            
+            string[] basis = fileLine.Split(',');
+            name = basis[0];
+            activityListItemWeight = Int32.Parse(basis[1]);
         }
     }
 }

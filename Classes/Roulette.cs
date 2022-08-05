@@ -10,11 +10,16 @@ namespace Activity_Roulette.Classes
     class Roulette
     {
         // Папка приложения
-        private static string AppFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Activity Roulette";
+        private static readonly string AppFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Activity Roulette";
         // Файл активностей
         public static readonly string activityListPath = AppFolder + @"\activitylist.txt";
-        // Файл истории логов
-        private static string historyLogPath = AppFolder + @"\historylog.txt";
+        // Файл истории
+        private static readonly string historyLogPath = AppFolder + @"\historylog.txt";
+        // Общий вес файла активностей
+        private int activityListWeight;
+        // Общий размер файла истории
+        private int historyLogSize;
+
         public static void CreateAppFolder()
         {
             if (Directory.Exists(AppFolder))
@@ -91,11 +96,9 @@ namespace Activity_Roulette.Classes
         }
         public static bool ValidateNewActivityItemNumber(string userInput)
         {
-            char symbol = ',';
-            int startIndex = userInput.IndexOf(symbol) + 1;
-            string number = userInput.Substring(startIndex).Trim();
-            bool isConveratble = Int32.TryParse(number, out int result);
-            if (isConveratble == true && result <= 100)
+            string number = userInput.Substring(userInput.IndexOf(',') + 1).Trim();
+            bool isConvertable = Int32.TryParse(number, out int result);
+            if (isConvertable == true && result <= 100)
             {
                 return true;
             }
@@ -104,21 +107,32 @@ namespace Activity_Roulette.Classes
                 return false;
             }
         }
+        public static Dictionary<string, ActivityItem> CreateContainer()
+        {
+            Dictionary<string, ActivityItem> activityItemsContainer = new Dictionary<string, ActivityItem>();
+            foreach (string line in File.ReadLines(activityListPath))
+            {
+                ActivityItem activity = new ActivityItem(line);
+                activityItemsContainer.Add(activity.name, activity);
+            }
+            return activityItemsContainer;
+        }
 
         /* Что-то на будущее :D
-         * Метод для определения повторов
-         * public static bool ValidateNewActivityItemNumber(string userInput)
+           Метод для определения повторов
+         public static bool ValidateNewActivityItemNumber(string userInput)
         { 
         
         }
+
            Метод для изменения активности
-         * public static string ChangeActivityItem()
+         public static string ChangeActivityItem()
         {
 
-        }*/
+        }
 
-        /* Метод для удаления активности
-         * public static string DeleteActivityItem()
+           Метод для удаления активности
+         public static string DeleteActivityItem()
         {
 
         }*/
