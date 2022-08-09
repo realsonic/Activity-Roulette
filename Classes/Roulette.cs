@@ -16,14 +16,8 @@ namespace Activity_Roulette.Classes
         // Файл активностей
         public static readonly string activityListPath = AppFolder + @"\activitylist.txt";
         // Файл истории
-        private static readonly string historyLogPath = AppFolder + @"\historylog.txt";
-        // Контейнер текущих активностей
-        private static Dictionary<string, ActivityItem> activityItemsContainer;
-        // Общий вес файла активностей
-        private static int overallActivityListWeight;
-        // Общий размер файла истории
-        private static int historyLogSize;
-
+        public static readonly string historyLogPath = AppFolder + @"\historylog.txt";
+        
         public static void CreateAppFolder()
         {
             if (Directory.Exists(AppFolder))
@@ -58,6 +52,26 @@ namespace Activity_Roulette.Classes
                 FileStream fileCreator = File.Create(historyLogPath);
                 fileCreator.Close();
             }
+        }
+        public static void RequestNewActivityItem()
+        {
+            Console.WriteLine("Do You want to add new activities in the File? Yes/No");
+                while (true)
+                {
+                    string userAnswer = Console.ReadLine();
+                    if (userAnswer.ToLower() == "yes")
+                    {
+                        Console.WriteLine("Please use following structure: Activity Name, Number" + "\n" +
+                            "Where: Activity Name should not include a \",\" as is used to divide the activity name from a number" + "\n" +
+                            "       Number is from 1 to 99 which will represent Your desire to do a particular task" + "\n" +
+                            "For Example: Play Might and Magic 10, 65");
+                        Roulette.AddNewActivityItem();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
         }
         public static void AddNewActivityItem()
         {
@@ -110,46 +124,6 @@ namespace Activity_Roulette.Classes
             {
                 return false;
             }
-        }
-        public static void SetActivityItemsContainer()
-        {
-            Dictionary<string, ActivityItem> Container = new Dictionary<string, ActivityItem>();
-            foreach (string line in File.ReadLines(activityListPath))
-            {
-                ActivityItem activity = new ActivityItem(line);
-                Container.Add(activity.name, activity);
-            }
-            activityItemsContainer = Container;
-        }
-        public static Dictionary<string, ActivityItem> GetActivityItemsContainer()
-        {
-
-            return activityItemsContainer;
-        }
-        public static void WriteHistoryLogLine()
-        {
-
-        }
-        public static void SetHistoryLogSize()
-        {
-            historyLogSize = File.ReadLines(historyLogPath).Count();
-        }
-        public static int GetHistoryLogSize()
-        {
-            return historyLogSize;
-        } 
-        public static void SetOverallActivityListWeight(Dictionary<string, ActivityItem> Container)
-        {
-            int sum = 0;
-            foreach (KeyValuePair<string, ActivityItem> activity in Container)
-            {
-                sum += activity.Value.activityListItemWeight;
-            }
-            overallActivityListWeight = sum;
-        }
-        public static int GetOverallActivityListWeight()
-        {
-            return overallActivityListWeight;
         }
         /* Что-то на будущее :D
            Метод для определения повторов

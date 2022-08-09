@@ -16,28 +16,48 @@ namespace Activity_Roulette
             Roulette.CreateAppFolder();
             Roulette.CreateActivityList();
             Roulette.CreateHistoryLog();
-            Roulette.SetOverallActivityListWeight();
-            Roulette.SetHistoryLogSize();
-            // switch как меню для реализации разных действий?
+            ActivityItemsList list = new ActivityItemsList();
+            Dictionary<string, ActivityItem> items = list.GetActivityItemsContainer();
+            foreach (KeyValuePair<string, ActivityItem> item in items)
+                Console.WriteLine($"Activity name is {item.Key}, activity value is {item.Value.activityListItemWeight}");
+            list.SetOverallActivityListWeight(items);
+            float listsum = list.GetOverallActivityListWeight();
+            Console.WriteLine(listsum); 
+            // switch как меню для реализации разных действий на основе цифр и слов???
             // Запрос на добавление новых активностей
-            Console.WriteLine("Do You want to add new activities in the File? Yes/No");
             while (true)
             {
-                string userAnswer = Console.ReadLine();
-                if (userAnswer.ToLower() == "yes")
+                string userInput = Console.ReadLine();
+                switch (userInput.ToLower())
                 {
-                    Console.WriteLine("Please use following structure: Activity Name, Number" + "\n" +
-                        "Where: Activity Name should not include a \",\" as is used to divide the activity name from a number" + "\n" +
-                        "       Number is from 1 to 99 which will represent Your desire to do a particular task" + "\n" +
-                        "For Example: Play Might and Magic 10, 65");
-                    Roulette.AddNewActivityItem();
-                }
-                else
-                {
-                    break;
+                    case "add new item":
+                        Roulette.RequestNewActivityItem();
+                        break;
+                    /*case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    */
+                    default:
+                        Console.WriteLine("Do You to close the app? Yes/no");
+                        if (Console.ReadLine().ToLower() == "yes")
+                        {
+                            Console.WriteLine("Byyyyyye!");
+                            Console.ReadLine();
+                            return;
+                        }
+                        else
+                        {
+                            continue;
+                        }
                 }
             }
-            Console.ReadLine();
         }
     }
 }

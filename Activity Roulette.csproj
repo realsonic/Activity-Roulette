@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ActivityItemsList.cs" />
+    <Compile Include="Classes\HistoryItemsFile.cs" />
     <Compile Include="Classes\Roulette.cs" />
     <Compile Include="Classes\ActivityItem.cs" />
     <Compile Include="Program.cs" />
