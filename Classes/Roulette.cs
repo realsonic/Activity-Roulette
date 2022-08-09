@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,9 @@ namespace Activity_Roulette.Classes
 {
     class Roulette
     {
-        // Папка приложения
+        /// <summary>
+        /// Папка приложения
+        /// <summary>
         private static readonly string AppFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Activity Roulette";
         // Файл активностей
         public static readonly string activityListPath = AppFolder + @"\activitylist.txt";
